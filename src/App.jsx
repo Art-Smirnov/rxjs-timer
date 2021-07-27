@@ -8,7 +8,7 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import "./App.css";
 
 function App() {
-  const [sec, setSec] = useState(0);
+  const [timer, setTimer] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
 
   const wait = React.useCallback(() => {
@@ -21,7 +21,7 @@ function App() {
       .pipe(takeUntil(unsubscribe$))
       .subscribe(() => {
         if (isRunning === true) {
-          setSec((val) => val + 1000);
+          setTimer((val) => val + 1000);
         }
       });
 
@@ -47,16 +47,16 @@ function App() {
   }, []);
   const stop = React.useCallback(() => {
     setIsRunning(false);
-    setSec(0);
+    setTimer(0);
   }, []);
 
   const reset = React.useCallback(() => {
-    setSec(0);
+    setTimer(0);
   }, []);
 
   return (
     <div className="timer">
-      <span className="timer-numbers"> {new Date(sec).toISOString().slice(11, 19)}</span>
+      <span className="timer-numbers"> {new Date(timer).toISOString().slice(11, 19)}</span>
       <ButtonGroup size="large" color="primary" aria-label="large outlined primary button group">
         <Button onClick={isRunning ? stop : start}> {isRunning ? 'Stop' : 'Start'}</Button>
         <Button onClick={reset}>Reset</Button>
